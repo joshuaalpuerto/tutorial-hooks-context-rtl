@@ -1,0 +1,34 @@
+---
+name: Card
+---
+
+import { Playground, Props } from 'docz'
+import Card from './'
+import { DeleteButton } from './styled'
+
+# Card
+
+<Props of={Card}/>
+
+## Basic Usage
+
+<Playground>
+  <Card
+    id="1"
+    heading="React"
+    subheading="1 year"
+  />
+  <Card
+    id="2"
+    heading="NodeJS"
+    subheading="1 year"
+  />
+  <br />
+  <h2> With delete button </h2>
+  <Card
+    id="1"
+    heading="React"
+    subheading="1 year"
+    renderDelete={() => <DeleteButton />}
+  />
+</Playground>
