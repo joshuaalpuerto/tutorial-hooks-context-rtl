@@ -5,7 +5,7 @@ import StyledButton from './StyledButton'
 
 function Button({ onClick, children, ...props }) {
   return (
-    <StyledButton onClick={props.onClick} {...props}>
+    <StyledButton onClick={onClick} {...props}>
       {Children.toArray(children)}
     </StyledButton>
   )
