@@ -33,6 +33,8 @@
   "devDependencies": {
     "docz": "1.1.0",
     "docz-theme-default": "1.1.0",
-    "react-hot-loader": "4.8.4"
+    "jest-dom": "3.2.0",
+    "react-hot-loader": "4.8.4",
+    "react-testing-library": "7.0.0"
   }
 }
