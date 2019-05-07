@@ -11,12 +11,12 @@ function Card({ id, color, heading, subheading, renderDelete }) {
   const bgColor = color || DEFAULT_COLOR
   return (
     <Wrapper>
-      <IdWrapper bgColor={bgColor}>{id}</IdWrapper>
+      <IdWrapper data-testid="id" bgColor={bgColor}>{id}</IdWrapper>
       <ContentWrapper>
         {heading}
-        {subheading && <span> {subheading} </span>}
+        {subheading && <span data-testid="subheading"> {subheading} </span>}
       </ContentWrapper>
-      <Remove>{renderDelete && renderDelete()}</Remove>
+      <Remove data-testid="remove">{renderDelete && renderDelete()}</Remove>
     </Wrapper>
   )
 }

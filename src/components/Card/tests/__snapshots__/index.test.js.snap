@@ -1,0 +1,271 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IdWrapper Should have default bgColor even null values submitted 1`] = `
+.c2 {
+  background-color: #80878B;
+  color: #fff;
+  padding: 5px;
+}
+
+.c3 {
+  padding: 10px;
+  padding-right: 80px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c3 span {
+  color: #ccc;
+}
+
+.c5 {
+  cursor: pointer;
+  display: none;
+}
+
+.c0 {
+  background-color: #fff;
+  border: 2px solid #ccc;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin: 10px;
+  padding: 0;
+  position: relative;
+}
+
+.c0:hover .c1 {
+  background-color: #1b998e;
+}
+
+.c0:hover .c4 {
+  display: block;
+}
+
+@media only screen and (max-width:768px) {
+  .c0 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0;
+  }
+
+  .c0 .c4 {
+    display: block;
+  }
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="c1 c2"
+    data-testid="id"
+  >
+    1
+  </div>
+  <div
+    class="c3"
+  >
+    React
+    <span
+      data-testid="subheading"
+    >
+       
+      1 year
+       
+    </span>
+  </div>
+  <div
+    class="c4 c5"
+    data-testid="remove"
+  />
+</div>
+`;
+
+exports[`IdWrapper should be background default #80878B 1`] = `
+.c2 {
+  background-color: #80878B;
+  color: #fff;
+  padding: 5px;
+}
+
+.c3 {
+  padding: 10px;
+  padding-right: 80px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c3 span {
+  color: #ccc;
+}
+
+.c5 {
+  cursor: pointer;
+  display: none;
+}
+
+.c0 {
+  background-color: #fff;
+  border: 2px solid #ccc;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin: 10px;
+  padding: 0;
+  position: relative;
+}
+
+.c0:hover .c1 {
+  background-color: #1b998e;
+}
+
+.c0:hover .c4 {
+  display: block;
+}
+
+@media only screen and (max-width:768px) {
+  .c0 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0;
+  }
+
+  .c0 .c4 {
+    display: block;
+  }
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="c1 c2"
+    data-testid="id"
+  >
+    1
+  </div>
+  <div
+    class="c3"
+  >
+    React
+    <span
+      data-testid="subheading"
+    >
+       
+      1 year
+       
+    </span>
+  </div>
+  <div
+    class="c4 c5"
+    data-testid="remove"
+  />
+</div>
+`;
+
+exports[`IdWrapper should have different background color if passes as prop 1`] = `
+.c2 {
+  background-color: lightgreen;
+  color: #fff;
+  padding: 5px;
+}
+
+.c3 {
+  padding: 10px;
+  padding-right: 80px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c3 span {
+  color: #ccc;
+}
+
+.c5 {
+  cursor: pointer;
+  display: none;
+}
+
+.c0 {
+  background-color: #fff;
+  border: 2px solid #ccc;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin: 10px;
+  padding: 0;
+  position: relative;
+}
+
+.c0:hover .c1 {
+  background-color: #1b998e;
+}
+
+.c0:hover .c4 {
+  display: block;
+}
+
+@media only screen and (max-width:768px) {
+  .c0 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0;
+  }
+
+  .c0 .c4 {
+    display: block;
+  }
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="c1 c2"
+    data-testid="id"
+  >
+    1
+  </div>
+  <div
+    class="c3"
+  >
+    React
+    <span
+      data-testid="subheading"
+    >
+       
+      1 year
+       
+    </span>
+  </div>
+  <div
+    class="c4 c5"
+    data-testid="remove"
+  />
+</div>
+`;
