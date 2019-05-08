@@ -1,0 +1,22 @@
+[
+  {
+    "id": "< 1 year",
+    "label": "< 1 year"
+  },
+  {
+    "id": "1 - 3 years",
+    "label": "1 - 3 years"
+  },
+  {
+    "id": "3 - 5 years",
+    "label": "3 - 5 years"
+  },
+  {
+    "id": "5 - 7 years",
+    "label": "5 - 7 years"
+  },
+  {
+    "id": "7+ years",
+    "label": "7+ years"
+  }
+]
