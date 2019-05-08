@@ -14,7 +14,12 @@ const initialState = {
 function apiReducer(state = initialState, action = {}) {
   switch (action.type) {
     case FETCHING:
-      return initialState;
+      return {
+        ...state,
+        loader: true,
+        success: false,
+        error: false
+      };
     case SUCCESS:
       return {
         ...state,
