@@ -11,11 +11,9 @@ const Wrapper = styled.section`
   margin: 20px 0;
 `
 
-const URL = 'http://localhost:4000/skills'
+
 const  SkillsPage = () => {
-  const [ skills, skillsLoader ] = useGetSkillsApi({ 
-    url: URL
-  })
+  const [ skills, skillsLoader ] = useGetSkillsApi()
   return (
     <Wrapper>
       <h3>
