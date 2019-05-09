@@ -47,13 +47,19 @@ const Form = ({ onSubmit }) => {
 
   const formSubmission = useCallback((evt) => {
     evt.preventDefault()
-
-    onSubmit({
-      name, experience
-    })
-
-    //reset form
-    dispatch({ type: 'reset' })
+    /**
+     * Tho we have validation by our browser by default.
+     * This is still trigger in test since we are running on node.
+     * This will also add security
+     */
+    if (name && experience) {
+      onSubmit({
+        name, experience
+      })
+  
+      //reset form
+      dispatch({ type: 'reset' })
+    }
   }, [name, experience, onSubmit])
 
   return (
