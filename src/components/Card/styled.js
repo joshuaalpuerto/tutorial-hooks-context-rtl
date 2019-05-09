@@ -1,17 +1,33 @@
 import styled from 'styled-components'
 
 export const DeleteButton = styled.span`
-  &:after {
-    color: #ccc;
-    content: '\00d7';
-    font-family: Arial, sans-serif;
-    font-weight: 500;
-    font-size: 24px;
-    position: absolute;
-    right: 10px;
-    top: 5px;
-    z-index: 1;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  width: 24px;
+  height: 24px;
+  opacity: 0.3;
+
+  & :hover {
+  opacity: 1;
   }
+
+  &:before, &:after {
+    position: absolute;
+    left: 20px;
+    content: ' ';
+    height: 18px;
+    width: 2px;
+    background-color: #333;
+  }
+
+  &:before {
+    transform: rotate(45deg);
+  }
+  &:after {
+    transform: rotate(-45deg);
+  }
+
 `
 
 export const IdWrapper = styled.div`
