@@ -7,13 +7,13 @@ import { State, Dispatch, SUCCESS_SKILLS } from './store'
 const URL = 'http://localhost:4000/skills'
 
 function useGetSkillsApi() {
-  const [store, makeRequest] = useApi(URL)
+  const [store, makeRequest] = useApi()
   const dispatch = useContext(Dispatch)
 
   const { response } = store
 
   useEffect(() => {
-    makeRequest()
+    makeRequest(URL)
   }, [makeRequest])
 
   // Once data is available then return
@@ -36,7 +36,7 @@ function usePostSkillsApi() {
   const dispatch = useContext(Dispatch)
   const { skills } = useContext(State)
 
-  const [store, makeRequest] = useApi(URL)
+  const [store, makeRequest] = useApi()
   const { response } = store
   
   // We need to save the current skill so we won't end up causing infinite loop
@@ -54,7 +54,7 @@ function usePostSkillsApi() {
   }, [response, dispatch])
 
   return {
-    createSkill: (value) => makeRequest({
+    createSkill: (value) => makeRequest(URL,{
       method: 'POST',
       body: JSON.stringify(value),
       headers: {
