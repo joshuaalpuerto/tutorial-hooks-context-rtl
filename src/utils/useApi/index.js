@@ -45,10 +45,10 @@ function apiReducer(state = initialState, action = {}) {
  * passed as 2nd argument, it will lose equality and will trigger
  * re-render
  */
-const useApiFetcher  = (url, options) => {
+const useApiFetcher  = (url) => {
   const [state, dispatch] = useReducer(apiReducer, initialState)
   
-  const makeRequest = useCallback(() => {
+  const makeRequest = useCallback((options) => {
     (async () => {
       dispatch(fetching());
       try {
@@ -58,7 +58,7 @@ const useApiFetcher  = (url, options) => {
         dispatch(error(err));
       }
     })()
-  }, [url, options])
+  }, [url])
 
   return [state, makeRequest]
 }
