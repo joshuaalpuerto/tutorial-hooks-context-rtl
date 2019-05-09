@@ -27,6 +27,8 @@ function formReducer(state, action) {
         ...state,
         'experience': action.payload
       };
+    case 'reset': 
+      return initialState
     default:
       return state;
   }
@@ -49,6 +51,9 @@ const Form = ({ onSubmit }) => {
     onSubmit({
       name, experience
     })
+
+    //reset form
+    dispatch({ type: 'reset' })
   }, [name, experience, onSubmit])
 
   return (
