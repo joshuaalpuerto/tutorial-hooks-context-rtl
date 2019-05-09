@@ -12,11 +12,6 @@ describe('IdWrapper', () => {
     subheading: '1 year'
   }
 
-  it('should have id existing', () => {
-    const { getByTestId } = render(<Card {...{ ...props }} />)
-    expect(getByTestId('id')).toHaveTextContent(props.id)
-  })
-
   it('Should have default bgColor even null values submitted', () => {
     const { container, getByTestId } = render(<Card {...{ ...props, color: null }} />)
     expect(container.firstChild).toMatchSnapshot()
@@ -52,15 +47,6 @@ describe('ContentWrapper', () => {
     expect(getByText(props.heading)).toBeInTheDocument()
     expect(getByText(props.subheading)).toBeInTheDocument()
   })
-
-  it('should have null subheading content if not define', () => {
-    const props = {
-      id: 1,
-      heading: 'React',
-    }
-    const { queryByTestId } = render(<Card {...{ ...props }} />)
-    expect(queryByTestId('subheading')).toBeNull()
-  })
 })
 
 describe('Remove', () => {
@@ -70,14 +56,36 @@ describe('Remove', () => {
     subheading: '1 year'
   }
 
-  it('should show "X" icon for deletion', () => {
+  it('should have "X" icon for deletion', () => {
     const subProps = {
       ...props,
       renderDelete: <div> X </div>
     }
 
     const { getByText } = render(<Card {...{ ...subProps }} />)
+    // should be in the document
     expect(getByText('X')).toBeInTheDocument()
+    // but it should be hidden
+    expect(getByText('X')).not.toBeVisible()
+  })
+
+  /**
+   * Skipped since it's too much unit testing as stated here
+   * https://spectrum.chat/testing-library/general/how-do-i-test-styles-for-hover-events~108403f4-915b-4243-974c-c41af826b91d
+   */
+  it.skip('should show "X" on hover', () => {
+    const subProps = {
+      ...props,
+      renderDelete: <div> X </div>
+    }
+
+    const { getByTestId } = render(<Card {...{ ...subProps }} />)
+    const wrapper = getByTestId('wrapper')
+
+    fireEvent.mouseOver(wrapper)
+
+    // should be in the document
+    expect(wrapper.querySelector('[data-testid="remove"]')).toHaveStyleRule('display', 'block')
   })
 
   it('Remove should be empty if renderDelete is not provided', () => {

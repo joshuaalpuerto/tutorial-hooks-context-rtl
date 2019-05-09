@@ -10,7 +10,7 @@ export const DEFAULT_COLOR = '#80878B'
 function Card({ id, color, heading, subheading, renderDelete }) {
   const bgColor = color || DEFAULT_COLOR
   return (
-    <Wrapper>
+    <Wrapper data-testid="wrapper">
       <IdWrapper data-testid="id" bgColor={bgColor}>{id}</IdWrapper>
       <ContentWrapper>
         {heading}

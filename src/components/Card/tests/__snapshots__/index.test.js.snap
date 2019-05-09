@@ -64,6 +64,7 @@ exports[`IdWrapper Should have default bgColor even null values submitted 1`] = 
 
 <div
   class="c0"
+  data-testid="wrapper"
 >
   <div
     class="c1 c2"
@@ -154,6 +155,7 @@ exports[`IdWrapper should be background default #80878B 1`] = `
 
 <div
   class="c0"
+  data-testid="wrapper"
 >
   <div
     class="c1 c2"
@@ -244,6 +246,7 @@ exports[`IdWrapper should have different background color if passes as prop 1`] 
 
 <div
   class="c0"
+  data-testid="wrapper"
 >
   <div
     class="c1 c2"
