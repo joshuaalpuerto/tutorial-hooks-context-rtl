@@ -71,10 +71,9 @@ describe('Remove', () => {
   }
 
   it('should show "X" icon for deletion', () => {
-    const DeleteComponent = () => <div> X </div>
     const subProps = {
       ...props,
-      renderDelete: DeleteComponent
+      renderDelete: <div> X </div>
     }
 
     const { getByText } = render(<Card {...{ ...subProps }} />)
