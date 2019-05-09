@@ -1,0 +1,66 @@
+import { useContext, useEffect, useRef } from 'react'
+
+import useApi from 'utils/useApi'
+
+import { State, Dispatch, SUCCESS_SKILLS } from './store'
+
+const URL = 'http://localhost:4000/skills'
+
+function useGetSkillsApi() {
+  const [store, makeRequest] = useApi(URL)
+  const dispatch = useContext(Dispatch)
+
+  const { response } = store
+
+  useEffect(() => {
+    makeRequest()
+  }, [makeRequest])
+
+  // Once data is available then return
+  useEffect(() => {
+    if (response) {
+      dispatch({ type: SUCCESS_SKILLS, payload: response })
+    }
+  }, [response, dispatch])
+
+ return null
+}
+
+function usePostSkillsApi() {
+  const currentSkill = useRef(null)
+
+  const dispatch = useContext(Dispatch)
+  const { skills } = useContext(State)
+
+  const [store, makeRequest] = useApi(URL)
+  const { response } = store
+  
+  // We need to save the current skill so we won't end up causing infinite loop
+  // tho this will trigger always on re-render
+  // It won't cause the next `useEffect` to trigger infinitely since it's checking the shallow copy
+  // of currentSkill `useRef(null)` tho the property is updated.
+  useEffect(() => {
+    currentSkill.current = skills
+  }) 
+
+  useEffect(() => {
+    if (response) {
+      dispatch({ type: SUCCESS_SKILLS, payload: [...currentSkill.current, response] })
+    }
+  }, [response, dispatch])
+
+  return {
+    createSkill: (value) => makeRequest({
+      method: 'POST',
+      body: JSON.stringify(value),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+  }
+}
+
+export {
+  useGetSkillsApi,
+  usePostSkillsApi
+}
