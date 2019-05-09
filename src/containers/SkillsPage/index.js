@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import LoadingIndicator from 'components/LoadingIndicator'
 
 import Form from './Form'
 import Skills from './Skills'
-import { useGetSkillsApi } from './useSkillsApi'
+import { Provider as  SkillsProvider, State } from './store'
+import { useGetSkillsApi,  usePostSkillsApi } from './api'
 
 const Wrapper = styled.section`
   margin: 20px 0;
@@ -13,13 +14,17 @@ const Wrapper = styled.section`
 
 
 const  SkillsPage = () => {
-  const [ skills, skillsLoader ] = useGetSkillsApi()
+  const { skills, skillsLoader } = useContext(State)
+  const { createSkill } = usePostSkillsApi()
+  
+  useGetSkillsApi()
+
   return (
     <Wrapper>
       <h3>
         Add skills
       </h3>
-      <Form onSubmit={() => {}} />
+      <Form onSubmit={createSkill} />
       {
         skillsLoader ?
         <LoadingIndicator/> :
@@ -32,6 +37,10 @@ const  SkillsPage = () => {
   )
 }
 
-SkillsPage.propTypes = {}
+const ConnectedSkillsPage = () =>(
+  <SkillsProvider>
+    <SkillsPage />
+  </SkillsProvider>
+)
 
-export default SkillsPage
+export default ConnectedSkillsPage
