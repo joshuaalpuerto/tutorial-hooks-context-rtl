@@ -26,6 +26,10 @@ function useGetSkillsApi() {
  return null
 }
 
+/**
+ * We make our handler as useRef since this is react way to store reference for shallow equality
+ * we can define this also as an object but it should be outside in the function
+ */
 function usePostSkillsApi() {
   const currentSkill = useRef(null)
 
