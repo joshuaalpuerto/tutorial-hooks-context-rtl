@@ -6,7 +6,7 @@ import LoadingIndicator from 'components/LoadingIndicator'
 import Form from './Form'
 import Skills from './Skills'
 import { Provider as  SkillsProvider, State } from './store'
-import { useGetSkillsApi,  usePostSkillsApi } from './api'
+import { useGetSkillsApi,  usePostSkillsApi, useDeleteSkillsApi } from './api'
 
 const Wrapper = styled.section`
   margin: 20px 0;
@@ -16,7 +16,8 @@ const Wrapper = styled.section`
 const  SkillsPage = () => {
   const { skills, skillsLoader } = useContext(State)
   const { createSkill } = usePostSkillsApi()
-  
+  const { deleteSkill }  = useDeleteSkillsApi()
+
   useGetSkillsApi()
 
   return (
@@ -30,7 +31,7 @@ const  SkillsPage = () => {
         <LoadingIndicator/> :
         <Skills 
           skills={skills}
-          onDelete={() => {}}
+          onDelete={deleteSkill}
         />
       }
     </Wrapper>

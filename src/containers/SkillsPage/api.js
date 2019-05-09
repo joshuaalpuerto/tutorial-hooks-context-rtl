@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef } from 'react'
+import { filter, propEq, complement } from 'ramda'
 
 import useApi from 'utils/useApi'
 
@@ -64,7 +65,40 @@ function usePostSkillsApi() {
   }
 }
 
+export const removeFromArray = ({ key, value }) =>
+filter(complement(propEq(key, value)))
+
+function useDeleteSkillsApi() {
+  const currentSkill = useRef(null)
+
+  const dispatch = useContext(Dispatch)
+  const { skills } = useContext(State)
+
+  const [, makeRequest] = useApi()
+
+  // We need to save the current skill so we won't end up causing infinite loop
+  // tho this will trigger always on re-render
+  // It won't cause the next `useEffect` to trigger infinitely since it's checking the shallow copy
+  // of currentSkill `useRef(null)` tho the property is updated.
+  useEffect(() => {
+    currentSkill.current = skills
+  })
+
+  return {
+    deleteSkill: (id) => {
+      makeRequest(`${URL}/${id}`, {
+        method: 'DELETE'
+      })
+
+      // Make optimistic change
+      dispatch({ type: SUCCESS_SKILLS, payload: removeFromArray({ key: 'id', value: id })(currentSkill.current) })
+    }
+  }
+}
+
+
 export {
   useGetSkillsApi,
-  usePostSkillsApi
+  usePostSkillsApi,
+  useDeleteSkillsApi
 }
