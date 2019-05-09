@@ -1,63 +1,73 @@
-import { useReducer, useState, useEffect } from 'react'
-import { filter, propEq, complement } from 'ramda'
+import React, { createContext, useReducer } from 'react'
 
-import useApi from 'utils/useApi'
+const STORE_PREFIX = `skills`
 
-const URL = 'http://localhost:4000/skills'
-
+const State = createContext({})
 /**
- * Util simply filter the key-value pair as constraint and will filter it from the list
+ * Why we need to separate this?
+ * See component will always rerender every time the value
+ * of provider is change. Now, if we have component that only 
+ * wants to `dispatch` then those component will re-render once 
+ * the `state` changes.
  */
-const removeFromArray = ({ key, value }) =>
-  filter(complement(propEq(key, value)))
+const Dispatch = createContext({})
 
-export const INITIAL_STATE = []
+export const  GET_SKILLS = `${STORE_PREFIX}/GET_SKILLS`
+export const  CREATE_SKILLS = `${STORE_PREFIX}/CREATE_SKILLS`
+export const  DELETE_SKILLS = `${STORE_PREFIX}/DELETE_SKILLS`
+export const  SUCCESS_SKILLS = `${STORE_PREFIX}/SUCCESS_SKILLS`
+export const  ERROR_SKILLS = `${STORE_PREFIX}/ERROR_SKILLS`
+
+export const INITIAL_STATE = {
+  skills: [],
+  skillsLoader: true,
+  skillsSuccess: false,
+  skillsError: false
+}
 export function reducer(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
-    case 'INITIAL': 
-      return action.payload
-    case 'ADD':
-      return [...state, action.payload]
-    case 'REMOVE':
-      return removeFromArray({ key: 'id', value: action.payload })(state)
+    case GET_SKILLS:
+    case CREATE_SKILLS:
+    case DELETE_SKILLS:
+      return {
+        ...state,
+        skillsLoader: true,
+        skillsSuccess: false,
+        skillsError: false
+      }
+    case SUCCESS_SKILLS:
+      return {
+        ...state,
+        skills: action.payload,
+        skillsLoader: false,
+        skillsSuccess: true,
+        skillsError: false
+      }
+    case ERROR_SKILLS:
+      return {
+        ...state,
+        skillsLoader: false,
+        skillsSuccess: false,
+        skillsError: true
+      }
     default:
       return state;
   }
 }
 
-const useSkillStore = () => {
-  const [ skills, dispatch ] =  useReducer(reducer, INITIAL_STATE)
-  const [ skillsLoader, setSkillsLoader ] = useState(true)
-  const { response, apiLoading } = useGetSkillsApi()
+// Provider
+const Provider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
 
-  // initial request for loading skills
-  useEffect(() => {
-    dispatch({ type: 'INITIAL', payload: response })
-    setSkillsLoader(apiLoading)
-  }, [response, apiLoading])
-
-  return {
-    skills,
-    skillsLoader
-  }
+  return (
+    <State.Provider value={state}>
+      <Dispatch.Provider value={dispatch}>{children}</Dispatch.Provider>
+    </State.Provider>
+  )
 }
-
-function useGetSkillsApi() {
-  const [store, makeRequest] = useApi(URL)
-  const { response, loader } = store
-  
-  useEffect(() => {
-    makeRequest()
-  }, [makeRequest])
-
-  return {
-    response,
-    apiLoading: loader
-  }
-}
-
 
 export {
-  useGetSkillsApi,
-  useSkillStore
+  State,
+  Dispatch,
+  Provider
 }
