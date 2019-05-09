@@ -20,7 +20,7 @@ const EmptySkills = styled.div`
 `
 
 export const Empty = () => (
-  <EmptySkills>
+  <EmptySkills data-testid="empty-skills">
     No records
   </EmptySkills>
 )
@@ -33,6 +33,7 @@ const Skills = ({ skills, onDelete }) => (
     ) : (
       skills.map(({ id, name, experience }, idx) => (
         <Card
+          data-testid="skill-card"
           key={id}
           id={id}
           heading={name}
