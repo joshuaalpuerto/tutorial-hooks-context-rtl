@@ -10,6 +10,7 @@ const InputHandler = React.memo(({ value, onInputChange }) => {
   return (
     <InputWrapper>
       <Input
+        aria-label="skill"
         minLength={4}
         maxLength={255}
         dv

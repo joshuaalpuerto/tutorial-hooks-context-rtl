@@ -12,6 +12,7 @@ const SelectHandler = React.memo(({ value, onInputChange }) => {
   return (
     <ExperienceWrapper>
       <Select
+        aria-label="experience"
         name="experience"
         onChange={onInputChange}
         value={value}
