@@ -38,7 +38,7 @@ const Skills = ({ skills, onDelete }) => (
           heading={name}
           subheading={experience}
           color={colorIdentifier(idx)}
-          renderDelete={() => <DeleteButton onClick={() => onDelete(id)} />}
+          renderDelete={<DeleteButton onClick={() => onDelete(id)} />}
         />
       ))
     )}

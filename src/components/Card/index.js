@@ -16,20 +16,20 @@ function Card({ id, color, heading, subheading, renderDelete }) {
         {heading}
         {subheading && <span data-testid="subheading"> {subheading} </span>}
       </ContentWrapper>
-      <Remove data-testid="remove">{renderDelete && renderDelete()}</Remove>
+      <Remove data-testid="remove">{renderDelete}</Remove>
     </Wrapper>
   )
 }
 
 Card.defaultProps = {
   color: DEFAULT_COLOR,
-  renderDelete: null
+  // renderDelete: null
 }
 
 Card.propTypes = {
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   heading: PropTypes.string.isRequired,
-  renderDelete: PropTypes.func,
+  renderDelete: PropTypes.node,
   subheading: PropTypes.string,
   color: PropTypes.string
 }
