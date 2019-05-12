@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import LoadingIndicator from 'components/LoadingIndicator'
 
 import Form from './Form'
 import Skills from './Skills'
-import { Provider as  SkillsProvider, State } from './store'
+import { Provider as  SkillsProvider, useSkillStore } from './store'
 import { useGetSkillsApi,  usePostSkillsApi, useDeleteSkillsApi } from './api'
 
 const Wrapper = styled.section`
@@ -14,7 +14,7 @@ const Wrapper = styled.section`
 
 
 const  SkillsPage = () => {
-  const { skills, skillsLoader } = useContext(State)
+  const { skills, skillsLoader } = useSkillStore()
   const { createSkill } = usePostSkillsApi()
   const { deleteSkill }  = useDeleteSkillsApi()
 

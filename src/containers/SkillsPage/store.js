@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useReducer, useContext } from 'react'
 
 const STORE_PREFIX = `skills`
 
@@ -55,6 +55,16 @@ export function reducer(state = INITIAL_STATE, action = {}) {
   }
 }
 
+const useSkillStore = () => {
+  const state = useContext(State)
+
+  if (!state) {
+    throw new Error('Consumer should be wrapped inside the Provider')
+  }
+
+  return state
+}
+
 // Provider
 const Provider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
@@ -69,5 +79,6 @@ const Provider = ({ children }) => {
 export {
   State,
   Dispatch,
-  Provider
+  Provider,
+  useSkillStore
 }
