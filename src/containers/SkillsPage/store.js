@@ -2,6 +2,10 @@ import React, { createContext, useReducer, useContext } from 'react'
 
 const STORE_PREFIX = `skills`
 
+/**
+ * We don't need to test this since it is already been testing on our skillPage.test
+ */
+
 const State = createContext({})
 /**
  * Why we need to separate this?
