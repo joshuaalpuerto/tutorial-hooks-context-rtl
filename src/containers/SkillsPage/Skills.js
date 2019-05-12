@@ -25,6 +25,11 @@ export const Empty = () => (
   </EmptySkills>
 )
 const colorIdentifier = ifElse(gt(5), always('#24333C'), always(null))
+
+/**
+ * Don't delete `testid` if you are going to change the implementation,
+ *  please retain the testid so it wont break the test 
+ **/ 
 /* eslint-disable react/prefer-stateless-function */
 const Skills = ({ skills, onDelete }) => (
   <SkillsWrapper>
@@ -39,7 +44,7 @@ const Skills = ({ skills, onDelete }) => (
           heading={name}
           subheading={experience}
           color={colorIdentifier(idx)}
-          renderDelete={<DeleteButton onClick={() => onDelete(id)} />}
+          renderDelete={<DeleteButton data-testid="delete-skill" onClick={() => onDelete(id)} />}
         />
       ))
     )}
