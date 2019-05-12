@@ -1,19 +1,20 @@
-import { useContext, useEffect, useRef } from 'react'
+import { useCallback, useContext, useEffect, useRef } from 'react'
 import { filter, propEq, complement } from 'ramda'
 
 import useApi from 'utils/useApi'
 
-import { State, Dispatch, SUCCESS_SKILLS } from './store'
+import { useSkillStore, Dispatch, SUCCESS_SKILLS } from './store'
 
 const URL = 'http://localhost:4000/skills'
 
 function useGetSkillsApi() {
+  const { skills } = useSkillStore()
   const [store, makeRequest] = useApi()
   const dispatch = useContext(Dispatch)
 
   const { response } = store
-
-  useEffect(() => {
+  
+  const fetchSkills = useCallback(() => {
     makeRequest(URL)
   }, [makeRequest])
 
@@ -24,7 +25,10 @@ function useGetSkillsApi() {
     }
   }, [response, dispatch])
 
- return null
+ return {
+  fetchSkills,
+  skills
+ }
 }
 
 /**
@@ -35,7 +39,7 @@ function usePostSkillsApi() {
   const currentSkill = useRef(null)
 
   const dispatch = useContext(Dispatch)
-  const { skills } = useContext(State)
+  const { skills } = useSkillStore()
 
   const [store, makeRequest] = useApi()
   const { response } = store
@@ -72,7 +76,7 @@ function useDeleteSkillsApi() {
   const currentSkill = useRef(null)
 
   const dispatch = useContext(Dispatch)
-  const { skills } = useContext(State)
+  const { skills } = useSkillStore()
 
   const [, makeRequest] = useApi()
 

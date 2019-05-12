@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 import LoadingIndicator from 'components/LoadingIndicator'
@@ -15,11 +15,14 @@ const Wrapper = styled.section`
 
 const  SkillsPage = () => {
   const { skills, skillsLoader } = useSkillStore()
+  const { fetchSkills } = useGetSkillsApi()
   const { createSkill } = usePostSkillsApi()
   const { deleteSkill }  = useDeleteSkillsApi()
-
-  useGetSkillsApi()
-
+  
+  useEffect(() => {
+    fetchSkills()
+  }, [fetchSkills])
+  
   return (
     <Wrapper>
       <h3>
