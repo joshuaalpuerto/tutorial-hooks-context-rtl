@@ -10,20 +10,15 @@ beforeEach(() => {
     .spyOn(global, 'fetch')
     .mockImplementation(() => ({
       json() {
-        return new Promise((resolve) => {
-          // wrapping into setTimeout to ensure we don't trigger it immediately
-          setTimeout(() =>
-            resolve([{
-              "id": 131,
-              "name": "GraphQL",
-              "experience": "< 1 Year"
-            },  {
-              "id": 132,
-              "name": "GraphQL",
-              "experience": "< 1 Year"
-            }])
-          )
-        }) 
+        return [{
+          "id": 131,
+          "name": "GraphQL",
+          "experience": "< 1 Year"
+        },  {
+          "id": 132,
+          "name": "GraphQL",
+          "experience": "< 1 Year"
+        }]
       }
     }))
 })
