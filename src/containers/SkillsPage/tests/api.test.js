@@ -1,6 +1,9 @@
 
 import React from 'react'
 import { renderHook, act } from 'react-hooks-testing-library'
+
+import { spyJestFetch } from 'utils/test-utils'
+
 import { Provider, useSkillStore, INITIAL_STATE } from '../store'
 import { useGetSkillsApi, usePostSkillsApi, useDeleteSkillsApi } from '../api'
 
@@ -9,41 +12,47 @@ afterEach(() => {
   jest.resetAllMocks()
 })
 
-test('Should ensure that store is populated once API is requested', async() => {
-  let store
-  const spyFetch = jest
-    .spyOn(global, 'fetch')
-    .mockImplementation(() => ({
-      json() {
-        return [{
-          "id": 131,
-          "name": "GraphQL",
-          "experience": "< 1 Year"
-        },  {
-          "id": 132,
-          "name": "GraphQL",
-          "experience": "< 1 Year"
-        }]
-      }
-    }))
+const rerenderHookUseApi = (callback, options) => async (method, ...args) => {
+  const { result, waitForNextUpdate, rerender  } = renderHook(callback, options)
 
-  const { result, waitForNextUpdate, rerender  } = renderHook(() => {
-    store = useSkillStore()
-    return  useGetSkillsApi()
-  } , { wrapper: Provider })
-  //fetch skills
+  //trigger action
   act(() => {
-    result.current.fetchSkills()
+    result.current[method](...args)
   })
-
+  // wait since we are fetching for the items.(side effect update)
   await waitForNextUpdate()
-  
+
   /**
    * Since we are not in a browser, update doesn't work here. 
    * Remember we are not using React this is just a custom hooks with regular javascript function. 
    * So we need to re-rerender it manually to get the updated value
    **/
   rerender()
+
+  return {
+    result
+  }
+}
+
+test('Should ensure that store is populated once API is requested', async() => {
+  let store
+  const spyFetch = spyJestFetch([{
+    "id": 131,
+    "name": "GraphQL",
+    "experience": "< 1 Year"
+  },  {
+    "id": 132,
+    "name": "GraphQL",
+    "experience": "< 1 Year"
+  }])
+
+  const render = rerenderHookUseApi(() => {
+    store = useSkillStore()
+    return  useGetSkillsApi()
+  } , { wrapper: Provider })
+
+  //method we have from `useGetSkillsApi`
+  await render('fetchSkills');
 
   expect(spyFetch).toHaveBeenCalledTimes(1)
   expect(store.skills).toEqual([{
@@ -64,26 +73,15 @@ test('Should add skill to the store', async() => {
     "name": "GraphQL",
     "experience": "< 1 Year"
   }
-  const spyFetch = jest
-    .spyOn(global, 'fetch')
-    .mockImplementation(() => ({
-      json() {
-        return payload
-      }
-    }))
+  const spyFetch = spyJestFetch(payload)
 
-  const { result, waitForNextUpdate, rerender  } = renderHook(() => {
+  const render = rerenderHookUseApi(() => {
     store = useSkillStore()
     return  usePostSkillsApi()
   } , { wrapper: Provider })
-  //post skills
-  act(() => {
-    result.current.createSkill(payload)
-  })
 
-  await waitForNextUpdate()
-
-  rerender()
+  //method we have from `usePostSkillsApi`
+  await render('createSkill', payload);
 
   expect(spyFetch).toHaveBeenCalledTimes(1)
   expect(store.skills).toEqual([payload])
@@ -92,18 +90,13 @@ test('Should add skill to the store', async() => {
 
 test('Should delete skill #131 to the store', async() => {
   let store
-  jest
-  .spyOn(global, 'fetch')
-  .mockImplementation(() => ({
-    json() {
-      return 
-    }
-  }))
 
-  const { result, waitForNextUpdate, rerender  } = renderHook(() => {
+  const spyFetch = spyJestFetch({})
+
+  const render = rerenderHookUseApi(() => {
     store = useSkillStore()
     return  useDeleteSkillsApi()
-  } , {
+  }, {
     wrapper: (props) => 
       <Provider {...{...props, initialState: {
         ...INITIAL_STATE,
@@ -118,14 +111,10 @@ test('Should delete skill #131 to the store', async() => {
         }]
       }}}/> 
   })
-  //delete skills
-  act(() => {
-    result.current.deleteSkill(131)
-  })
 
-  await waitForNextUpdate()
+  //method we have from `useDeleteSkillsApi`
+  await render('deleteSkill', 131);
 
-  rerender()
-
+  expect(spyFetch).toHaveBeenCalledTimes(1)
   expect(store.skills.length).toEqual(1)
 })
