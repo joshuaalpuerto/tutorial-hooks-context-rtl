@@ -1,6 +1,6 @@
 import  { useReducer, useCallback } from 'react'
 
-const INITIAL_STATE = {}
+export const INITIAL_STATE = {}
 function formReducer(state, action) {
   switch (action.type) {
     case '__reset__':
