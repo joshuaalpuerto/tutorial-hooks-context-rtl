@@ -8,7 +8,6 @@ import { useSkillStore, Dispatch, SUCCESS_SKILLS } from './store'
 const URL = 'http://localhost:4000/skills'
 
 function useGetSkillsApi() {
-  const { skills } = useSkillStore()
   const [store, makeRequest] = useApi()
   const dispatch = useContext(Dispatch)
 
@@ -25,10 +24,9 @@ function useGetSkillsApi() {
     }
   }, [response, dispatch])
 
- return {
-  fetchSkills,
-  skills
- }
+  return {
+    fetchSkills
+  }
 }
 
 /**
