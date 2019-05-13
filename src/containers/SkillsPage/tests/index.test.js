@@ -1,26 +1,22 @@
 import React from 'react'
 import { render, fireEvent } from 'react-testing-library'
 
+import { spyJestFetch } from 'utils/test-utils'
+
 import ConnectedSkillsPage from '../index'
 
 let spy = null
 
 beforeEach(() => {
-  spy = jest
-    .spyOn(global, 'fetch')
-    .mockImplementation(() => ({
-      json() {
-        return [{
-          "id": 131,
-          "name": "GraphQL",
-          "experience": "< 1 Year"
-        },  {
-          "id": 132,
-          "name": "GraphQL",
-          "experience": "< 1 Year"
-        }]
-      }
-    }))
+  spy = spyJestFetch([{
+    "id": 131,
+    "name": "GraphQL",
+    "experience": "< 1 Year"
+  },  {
+    "id": 132,
+    "name": "GraphQL",
+    "experience": "< 1 Year"
+  }])
 })
 
 afterEach(() => {
