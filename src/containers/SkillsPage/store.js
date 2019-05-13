@@ -70,8 +70,8 @@ const useSkillStore = () => {
 }
 
 // Provider
-const Provider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
+const Provider = ({ children, initialState = INITIAL_STATE }) => {
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
     <State.Provider value={state}>
