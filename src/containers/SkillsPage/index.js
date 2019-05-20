@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import LoadingIndicator from 'components/LoadingIndicator'
 
 import Form from './Form'
-import Skills from './Skills'
+import Skills from './SkillsSuspense'
 import { Provider as  SkillsProvider, useSkillStore } from './store'
 import { useGetSkillsApi,  usePostSkillsApi, useDeleteSkillsApi } from './api'
 
