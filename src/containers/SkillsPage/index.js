@@ -6,7 +6,11 @@ import LoadingIndicator from 'components/LoadingIndicator'
 import Form from './Form'
 import Skills from './SkillsSuspense'
 import { Provider as  SkillsProvider, useSkillStore } from './store'
-import { useGetSkillsApi,  usePostSkillsApi, useDeleteSkillsApi } from './api'
+import {
+  useGetSkillsApi,
+  usePostSkillsApi,
+  useDeleteSkillsApi 
+} from './api'
 
 const Wrapper = styled.section`
   margin: 20px 0;
@@ -14,8 +18,9 @@ const Wrapper = styled.section`
 
 
 const  SkillsPage = () => {
-  const { skills, skillsLoader } = useSkillStore()
-  const { fetchSkills } = useGetSkillsApi()
+  const { state } = useSkillStore()
+  const { fetchSkills, fetchSkillsLoader } = useGetSkillsApi()
+  const { skills } = state
   const { createSkill } = usePostSkillsApi()
   const { deleteSkill }  = useDeleteSkillsApi()
   
@@ -30,7 +35,7 @@ const  SkillsPage = () => {
       </h3>
       <Form onSubmit={createSkill} />
       {
-        skillsLoader ?
+        fetchSkillsLoader ?
         <LoadingIndicator/> :
         <Skills 
           skills={skills}
