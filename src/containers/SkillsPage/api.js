@@ -1,17 +1,17 @@
-import { useCallback, useContext, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { filter, propEq, complement } from 'ramda'
 
 import useApi from 'utils/useApi'
 
-import { useSkillStore, Dispatch, SUCCESS_SKILLS } from './store'
+import { useSkillStore } from './store'
 
 const URL = 'http://localhost:4000/skills'
 
 function useGetSkillsApi() {
   const [store, makeRequest] = useApi()
-  const dispatch = useContext(Dispatch)
+  const { setSkills } = useSkillStore()
 
-  const { response } = store
+  const { response, loader } = store
   
   const fetchSkills = useCallback(() => {
     makeRequest(URL)
@@ -20,11 +20,12 @@ function useGetSkillsApi() {
   // Once data is available then return
   useEffect(() => {
     if (response) {
-      dispatch({ type: SUCCESS_SKILLS, payload: response })
+      setSkills(response)
     }
-  }, [response, dispatch])
+  }, [response, setSkills])
 
   return {
+    fetchSkillsLoader: loader,
     fetchSkills
   }
 }
@@ -35,11 +36,10 @@ function useGetSkillsApi() {
  */
 function usePostSkillsApi() {
   const currentSkill = useRef(null)
-
-  const dispatch = useContext(Dispatch)
-  const { skills } = useSkillStore()
-
+  
+  const { state: { skills }, setSkills } = useSkillStore()
   const [store, makeRequest] = useApi()
+
   const { response } = store
   
   // We need to save the current skill so we won't end up causing infinite loop
@@ -52,9 +52,9 @@ function usePostSkillsApi() {
 
   useEffect(() => {
     if (response) {
-      dispatch({ type: SUCCESS_SKILLS, payload: [...currentSkill.current, response] })
+      setSkills([...currentSkill.current, response])
     }
-  }, [response, dispatch])
+  }, [response, setSkills])
 
   return {
     createSkill: (value) => makeRequest(URL,{
@@ -73,8 +73,7 @@ filter(complement(propEq(key, value)))
 function useDeleteSkillsApi() {
   const currentSkill = useRef(null)
 
-  const dispatch = useContext(Dispatch)
-  const { skills } = useSkillStore()
+  const { state: { skills }, setSkills } = useSkillStore()
 
   const [, makeRequest] = useApi()
 
@@ -93,7 +92,9 @@ function useDeleteSkillsApi() {
       })
 
       // Make optimistic change
-      dispatch({ type: SUCCESS_SKILLS, payload: removeFromArray({ key: 'id', value: id })(currentSkill.current) })
+      setSkills(
+        removeFromArray({ key: 'id', value: id })(currentSkill.current)
+      )
     }
   }
 }
