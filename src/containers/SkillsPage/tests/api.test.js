@@ -55,7 +55,7 @@ test('Should ensure that store is populated once API is requested', async() => {
   await render('fetchSkills');
 
   expect(spyFetch).toHaveBeenCalledTimes(1)
-  expect(store.skills).toEqual([{
+  expect(store.state.skills).toEqual([{
     "id": 131,
     "name": "GraphQL",
     "experience": "< 1 Year"
@@ -84,7 +84,7 @@ test('Should add skill to the store', async() => {
   await render('createSkill', payload);
 
   expect(spyFetch).toHaveBeenCalledTimes(1)
-  expect(store.skills).toEqual([payload])
+  expect(store.state.skills).toEqual([payload])
 })
 
 
@@ -116,5 +116,5 @@ test('Should delete skill #131 to the store', async() => {
   await render('deleteSkill', 131);
 
   expect(spyFetch).toHaveBeenCalledTimes(1)
-  expect(store.skills.length).toEqual(1)
+  expect(store.state.skills.length).toEqual(1)
 })
